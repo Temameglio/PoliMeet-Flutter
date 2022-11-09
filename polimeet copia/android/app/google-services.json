@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "560652645855",
+    "project_id": "polimeet-9d734",
+    "storage_bucket": "polimeet-9d734.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:560652645855:android:ee6d29deef8450d1b8406a",
+        "android_client_info": {
+          "package_name": "com.example.polimeet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "560652645855-oaslvs7fm5v3g0hisqvs8igsl3445g6v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC77P_MDZp4xJc1L7mWDKCTM0WMr0dGBCs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "560652645855-oaslvs7fm5v3g0hisqvs8igsl3445g6v.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "560652645855-ug5elbkffs08a0qv22u0qmqf5gmtq6v3.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.polimeet"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
