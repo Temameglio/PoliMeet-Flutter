@@ -13,6 +13,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(MyApp());
+
 }
 
 class MyApp extends StatelessWidget {
@@ -22,8 +23,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     MaterialColor mycolor = MaterialColor(
-      Color.fromARGB(255, 0, 0, 0).value,
-      <int, Color>{
+      const Color.fromARGB(255, 0, 0, 0).value,
+      const <int, Color>{
         50: Color.fromRGBO(196, 45, 255, 0.1),
         100: Color.fromRGBO(196, 45, 255, 0.2),
         200: Color.fromRGBO(196, 45, 255, 0.3),
@@ -208,12 +209,12 @@ class _MyHomePageState extends State<MyHomePage> {
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.white,
               fontSize: 30,
             )),
 
-        shadowColor: Color.fromARGB(0, 85, 0, 127),
+        shadowColor: const Color.fromARGB(0, 85, 0, 127),
       ),
       body: Container(
         decoration: BoxDecoration(
@@ -293,6 +294,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
+
     return Form(
       key: _formKey,
       child: Scaffold(
@@ -300,7 +302,7 @@ class _SignUpPageState extends State<SignUpPage> {
         appBar: AppBar(
           // Here we take the value from the MyHomePage object that was created by
           // the App.build method, and use it to set our appbar title.
-          title: Text("PoliMeet",
+          title: const Text("PoliMeet",
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 30,
@@ -310,7 +312,7 @@ class _SignUpPageState extends State<SignUpPage> {
         body: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Center(
+            const Center(
               child: Padding(
                   padding: EdgeInsets.symmetric(vertical: 20),
                   child: Text(
@@ -322,7 +324,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 child: TextFormField(
                     cursorColor: Colors.white,
                     style: TextStyle(color: Color.fromARGB(200, 255, 255, 255)),
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.white),
                         ),
@@ -346,8 +348,8 @@ class _SignUpPageState extends State<SignUpPage> {
                 child: TextFormField(
                     obscureText: true,
                     cursorColor: Colors.white,
-                    style: TextStyle(color: Color.fromARGB(200, 255, 255, 255)),
-                    decoration: InputDecoration(
+                    style: const TextStyle(color: Color.fromARGB(200, 255, 255, 255)),
+                    decoration: const InputDecoration(
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.white),
                         ),
@@ -371,8 +373,8 @@ class _SignUpPageState extends State<SignUpPage> {
                 child: TextFormField(
                     obscureText: true,
                     cursorColor: Colors.white,
-                    style: TextStyle(color: Color.fromARGB(200, 255, 255, 255)),
-                    decoration: InputDecoration(
+                    style: const TextStyle(color: Color.fromARGB(200, 255, 255, 255)),
+                    decoration: const InputDecoration(
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.white),
                         ),
@@ -400,17 +402,34 @@ class _SignUpPageState extends State<SignUpPage> {
                     style: OutlinedButton.styleFrom(
                       side: BorderSide(width: 1.0, color: Colors.white),
                     ),
-                    onPressed: () {
+                    onPressed: () async {
                       if (_formKey.currentState!.validate()) {
                         //auth?.signUp(email: email, password: password);
-                        Navigator.pop(context);
+                        /*Navigator.pop(context);
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: ((context) => ProfileSetupPage())));
+                                builder: ((context) => ProfileSetupPage())));*/
+                        try {
+                             await FirebaseAuth.instance.createUserWithEmailAndPassword(
+                                 email: email,
+                                 password: password);
+                        } on FirebaseAuthException catch (e) {
+                          String exception = e.toString();
+                          String delimiter = ']';
+                          int lastIndex = exception.indexOf(delimiter)+2;
+                          exception = exception.substring(lastIndex, exception.length);
+                          final scaffold = ScaffoldMessenger.of(context);
+                          scaffold.showSnackBar(
+                            SnackBar(
+                              content: Text(exception),
+                              backgroundColor: const Color (0xffff0000),
+                            ),
+                          );
+                        }
                       }
                     },
-                    child: Text(
+                    child: const Text(
                       "Confirm",
                       style: TextStyle(color: Colors.white),
                     ))),
@@ -419,9 +438,12 @@ class _SignUpPageState extends State<SignUpPage> {
       ),
     );
   }
+
+
 }
 
-class ProfileSetupPage extends StatefulWidget {
+
+/*class ProfileSetupPage extends StatefulWidget {
   ProfileSetupPage({super.key});
   @override
   State<ProfileSetupPage> createState() => _ProfileSetupPageState();
@@ -439,17 +461,17 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> {
         appBar: AppBar(
           // Here we take the value from the MyHomePage object that was created by
           // the App.build method, and use it to set our appbar title.
-          title: Text("PoliMeet",
+          title: const Text("PoliMeet",
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 30,
               )),
-          shadowColor: Color.fromARGB(0, 85, 0, 127),
+          shadowColor: const Color.fromARGB(0, 85, 0, 127),
         ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Center(
+            const Center(
               child: Padding(
                   padding: EdgeInsets.symmetric(vertical: 20),
                   child: Text(
@@ -460,8 +482,8 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> {
             Center(
                 child: TextFormField(
                     cursorColor: Colors.white,
-                    style: TextStyle(color: Color.fromARGB(200, 255, 255, 255)),
-                    decoration: InputDecoration(
+                    style: const TextStyle(color: Color.fromARGB(200, 255, 255, 255)),
+                    decoration: const InputDecoration(
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.white),
                         ),
@@ -483,8 +505,8 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> {
             Center(
                 child: TextFormField(
                     cursorColor: Colors.white,
-                    style: TextStyle(color: Color.fromARGB(200, 255, 255, 255)),
-                    decoration: InputDecoration(
+                    style: const TextStyle(color: Color.fromARGB(200, 255, 255, 255)),
+                    decoration: const InputDecoration(
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.white),
                         ),
@@ -507,7 +529,7 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> {
                 child: TextFormField(
                     cursorColor: Colors.white,
                     style: TextStyle(color: Color.fromARGB(200, 255, 255, 255)),
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.white),
                         ),
@@ -538,7 +560,7 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> {
                         Navigator.pop(context);
                       }
                     },
-                    child: Text(
+                    child: const Text(
                       "Confirm",
                       style: TextStyle(color: Colors.white),
                     ))),
@@ -547,4 +569,4 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> {
       ),
     );
   }
-}
+}*/
