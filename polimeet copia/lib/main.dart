@@ -254,7 +254,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: ((context) => MyProfilePage())));
+                            builder: ((context) => SignUpPage())));
                   },
                   child: Text("Login")),
               Padding(
@@ -267,7 +267,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: ((context) => MyProfilePage())));
+                              builder: ((context) => SignUpPage())));
                     },
                     child: Text("New Account")),
               )
@@ -279,13 +279,13 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-class MyProfilePage extends StatefulWidget {
-  MyProfilePage({super.key});
+class SignUpPage extends StatefulWidget {
+  SignUpPage({super.key});
   @override
-  State<MyProfilePage> createState() => _MyProfilePageState();
+  State<SignUpPage> createState() => _SignUpPageState();
 }
 
-class _MyProfilePageState extends State<MyProfilePage> {
+class _SignUpPageState extends State<SignUpPage> {
   final _formKey = GlobalKey<FormState>();
   String password = "";
   String email = "";
@@ -318,52 +318,6 @@ class _MyProfilePageState extends State<MyProfilePage> {
                     style: TextStyle(color: Colors.white, fontSize: 20),
                   )),
             ),
-            Center(
-                child: TextFormField(
-                    cursorColor: Colors.white,
-                    style: TextStyle(color: Color.fromARGB(200, 255, 255, 255)),
-                    decoration: InputDecoration(
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
-                        ),
-                        /*focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.blue),
-                        ),*/
-                        labelStyle: TextStyle(
-                          color: Color.fromARGB(100, 255, 255, 255),
-                        ),
-                        labelText: "Nome",
-                        constraints:
-                            BoxConstraints(maxWidth: 300, minWidth: 100)),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return "Inserire nome";
-                      }
-                      return null;
-                    })),
-            Center(
-                child: TextFormField(
-                    cursorColor: Colors.white,
-                    style: TextStyle(color: Color.fromARGB(200, 255, 255, 255)),
-                    decoration: InputDecoration(
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
-                        ),
-                        /*focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.blue),
-                        ),*/
-                        labelStyle: TextStyle(
-                          color: Color.fromARGB(100, 255, 255, 255),
-                        ),
-                        labelText: "Cognome",
-                        constraints:
-                            BoxConstraints(maxWidth: 300, minWidth: 100)),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return "Inserire cognome";
-                      }
-                      return null;
-                    })),
             Center(
                 child: TextFormField(
                     cursorColor: Colors.white,
@@ -437,6 +391,115 @@ class _MyProfilePageState extends State<MyProfilePage> {
                       }
                       if (value != password) {
                         return "Le password non corrispondono";
+                      }
+                      return null;
+                    })),
+            Padding(
+                padding: EdgeInsets.symmetric(vertical: 30),
+                child: OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                      side: BorderSide(width: 1.0, color: Colors.white),
+                    ),
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        //auth?.signUp(email: email, password: password);
+                        Navigator.pop(context);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: ((context) => ProfileSetupPage())));
+                      }
+                    },
+                    child: Text(
+                      "Confirm",
+                      style: TextStyle(color: Colors.white),
+                    ))),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class ProfileSetupPage extends StatefulWidget {
+  ProfileSetupPage({super.key});
+  @override
+  State<ProfileSetupPage> createState() => _ProfileSetupPageState();
+}
+
+class _ProfileSetupPageState extends State<ProfileSetupPage> {
+  final _formKey = GlobalKey<FormState>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+      key: _formKey,
+      child: Scaffold(
+        backgroundColor: Color.fromARGB(255, 0, 0, 0),
+        appBar: AppBar(
+          // Here we take the value from the MyHomePage object that was created by
+          // the App.build method, and use it to set our appbar title.
+          title: Text("PoliMeet",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 30,
+              )),
+          shadowColor: Color.fromARGB(0, 85, 0, 127),
+        ),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Center(
+              child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: 20),
+                  child: Text(
+                    "Create new user",
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  )),
+            ),
+            Center(
+                child: TextFormField(
+                    cursorColor: Colors.white,
+                    style: TextStyle(color: Color.fromARGB(200, 255, 255, 255)),
+                    decoration: InputDecoration(
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                        /*focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.blue),
+                        ),*/
+                        labelStyle: TextStyle(
+                          color: Color.fromARGB(100, 255, 255, 255),
+                        ),
+                        labelText: "Nome",
+                        constraints:
+                            BoxConstraints(maxWidth: 300, minWidth: 100)),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "Inserire nome";
+                      }
+                      return null;
+                    })),
+            Center(
+                child: TextFormField(
+                    cursorColor: Colors.white,
+                    style: TextStyle(color: Color.fromARGB(200, 255, 255, 255)),
+                    decoration: InputDecoration(
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                        /*focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.blue),
+                        ),*/
+                        labelStyle: TextStyle(
+                          color: Color.fromARGB(100, 255, 255, 255),
+                        ),
+                        labelText: "Cognome",
+                        constraints:
+                            BoxConstraints(maxWidth: 300, minWidth: 100)),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "Inserire cognome";
                       }
                       return null;
                     })),
