@@ -40,6 +40,12 @@ dependencies:
   firebase_auth: ^4.1.1
   google_sign_in: ^4.0.0
 
+  #Google Icon
+  font_awesome_flutter: ^9.0.0
+
+  #State Management
+  provider: ^5.0.0
+
 
 dev_dependencies:
   flutter_test:

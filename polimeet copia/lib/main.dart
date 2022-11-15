@@ -4,8 +4,12 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:polimeet/GoogleSignInProvider.dart';
+import 'package:polimeet/auth_sercive.dart';
+import 'package:polimeet/home_screen.dart';
+import 'package:provider/provider.dart';
 import 'firebase_options.dart';
-import "auth_sercive.dart";
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,7 +39,7 @@ class MyApp extends StatelessWidget {
         700: Color.fromRGBO(196, 45, 255, 0.8),
         800: Color.fromRGBO(196, 45, 255, 0.9),
         900: Color.fromRGBO(196, 45, 255, 1),
-      },
+      }
     );
 
     return MaterialApp(
@@ -290,7 +294,7 @@ class _SignUpPageState extends State<SignUpPage> {
   final _formKey = GlobalKey<FormState>();
   String password = "";
   String email = "";
-  AuthService? auth;
+  bool _isSigningIn = false;
 
   @override
   Widget build(BuildContext context) {
@@ -433,84 +437,15 @@ class _SignUpPageState extends State<SignUpPage> {
                       "Confirm",
                       style: TextStyle(color: Colors.white),
                     ))),
-            FutureBuilder(
-              future: Authentication.initializeFirebase(context: context),
-              builder: (context, snapshot) {
-              if (snapshot.hasError) {
-                  return const Text('Error initializing Firebase');
-              }else if (snapshot.connectionState == ConnectionState.done) {
-                  return const GoogleSignInButton();
-              }return CircularProgressIndicator()
-              ;}
-            ),
+            ElevatedButton(
+              child: Text ('Sign up with Google'),
+              onPressed:() async {
+                //Not working
+                //await GoogleSignInProvider().signInWithGoogle();
+                //Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+              },
+            )
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class GoogleSignInButton extends StatefulWidget {
-  const GoogleSignInButton({super.key});
-
-  @override
-  _GoogleSignInButtonState createState() => _GoogleSignInButtonState();
-}
-
-class _GoogleSignInButtonState extends State<GoogleSignInButton> {
-  bool _isSigningIn = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 16.0),
-      child: _isSigningIn
-          ? const CircularProgressIndicator(
-        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-      )
-          : OutlinedButton(
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(Colors.white),
-            shape: MaterialStateProperty.all(
-              RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(40),
-              ),
-            ),
-          ),
-          onPressed: () async {
-            setState(() {
-              _isSigningIn = true;
-            });
-
-            // TODO: Add a method call to the Google Sign-In authentication
-
-            setState(() {
-              _isSigningIn = false;
-            });
-          },
-          child: Padding(
-          padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: const <Widget>[
-              Image(
-                image: AssetImage("assets/google_logo.png"),
-                height: 35.0,
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 10),
-                child: Text(
-                  'Sign in with Google',
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.black54,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              )
-            ],
-          ),
         ),
       ),
     );
